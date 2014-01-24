@@ -1,0 +1,44 @@
+{
+  "manifest_version": 2,
+  "name": "BTC AI",
+  "version": "1.2",
+  
+  "icons": {
+    "128": "icon128.png"
+  },
+  
+  "content_scripts": [
+    {
+      "matches": [ "http://freebitco.in/*" ],
+      "js": [ 
+		"import/jquery.js", 
+		"import/socket.io/socket.io.js",
+		"bot.js" 
+	  ]
+    }
+  ],
+  
+  "background": {
+    "scripts": ["background.js"]
+  },
+  
+  "permissions": [
+    "http://antigate.com/*",
+	"http://www.google.com/*",
+	"http://127.0.0.1/*",
+	"http://127.0.0.1:7777/*",
+	"http://46.50.180.250/*",
+	"tabs",
+	"cookies"
+  ],
+
+  "browser_action": {
+	"default_title": "BTC AI",
+	"default_icon": "icon128.png"
+  },
+  
+  "web_accessible_resources": [
+	"jquery.js",
+	"credentials.json"
+  ]
+}
