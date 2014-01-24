@@ -2,6 +2,9 @@ var express = require('express');
 var Antigate = require('antigate');
 var fs = require('fs');
 
+var credentials = JSON.parse(fs.readFileSync('./credentials.json', 'utf8'));
+var index = 0;
+
 var app = express();
 app.use(express.bodyParser());
 
@@ -38,12 +41,11 @@ function recognize(url)
 
 function signup()
 {
-	var credentials = JSON.parse(fs.readFileSync('./credentials.json', 'utf8'));
-	
-	if (credentials.length > 0)
+	if (credentials.length > 0 && index < credentials.kength)
 	{
 		res.writeHead(200, {'Content-Type': 'text/html'});
-		res.end(credentials[0]);
+		res.end(credentials[index]);
+		index++;
 	}
 	else
 	{
