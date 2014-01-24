@@ -1,6 +1,4 @@
 $(document).ready(function() {
-	var credentials = '';
-	
 	if ($('#signup_button').val() === undefined)
 		recognize();
 	else
