@@ -9,6 +9,6 @@ chrome.runtime.onMessage.addListener(
 		
 		if (type == 'cookies')
 			chrome.cookies.getAll({url: 'http://freebitco.in'}, function(cookies) { 
-				sendResponse(cookies); 
+				sendResponse(cookies);
 			});
 });
