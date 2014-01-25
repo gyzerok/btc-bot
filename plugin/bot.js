@@ -51,8 +51,13 @@ function onCaptchaReady(text)
 {
 	console.log(text);
 	
-	$('#recaptcha_response_field').val(text);
-	$('#free_play_form_button').click();
+	if (text == 'ERROR_CAPTCHA_UNSOLVABLE')
+		$('small').click();
+	else
+	{
+		$('#recaptcha_response_field').val(text);
+		$('#free_play_form_button').click();
+	}
 	
 	setTimeout(recognize, 5000);
 }
