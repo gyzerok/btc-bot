@@ -17,10 +17,14 @@ chrome.runtime.onMessage.addListener(
 		
 		if (type == 'proxy')
 			chrome.proxy.settings.get({}, function(config) {
+				var host = config.value.rules.singleProxy.host;
+				var port = config.value.rules.singleProxy.port;
+				var proxy = host + ':' + port;
+				
 				$.ajax({
 					url: serverURL,
 					type: 'post',
-					data: { type: 'log', proxy: captchaURL },
+					data: { type: 'log', proxy: proxy },
 				});
 			});
 });
