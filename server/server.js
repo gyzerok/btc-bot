@@ -21,7 +21,7 @@ app.post('/', function(req, res) {
 	
 });
 app.listen(80);
-console.log('Server running at http://127.0.0.1:80/');
+console.log('Server is running...');
 
 function recognize(res, url)
 {
@@ -32,7 +32,6 @@ function recognize(res, url)
 			throw error;
 		else
 		{
-			console.log(text);
 			res.writeHead(200, {'Content-Type': 'text/html'});
 			res.end(text);
 		}
@@ -43,6 +42,7 @@ function signup(res)
 {
 	if (credentials.length > 0 && index < credentials.length)
 	{
+		console.log("SignUps: " + index);
 		res.writeHead(200, {'Content-Type': 'text/html'});
 		res.end(credentials[index]);
 		index++;
