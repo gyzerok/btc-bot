@@ -11,10 +11,10 @@ app.use(express.bodyParser());
 app.post('/', function(req, res) {
 	switch (req.body.type)
 	{
-		'signup':
+		case 'signup':
 			signup(res);
 			break;
-		'recognize':
+		case 'recognize':
 			recognize(res, req.body.url);
 			break;
 	}
@@ -39,9 +39,9 @@ function recognize(url)
 	});
 }
 
-function signup()
+function signup(res)
 {
-	if (credentials.length > 0 && index < credentials.kength)
+	if (credentials.length > 0 && index < credentials.length)
 	{
 		res.writeHead(200, {'Content-Type': 'text/html'});
 		res.end(credentials[index]);

@@ -1,18 +1,18 @@
+var serverURL = 'http://127.0.0.1';
+
 $(document).ready(function() {
 	if ($('#signup_button').val() === undefined)
 		recognize();
 	else
 	{
-		$.getJSON(chrome.extension.getURL('./credentials.json'), function(data) {
-			signup(data.btc_address, data.btc_password);
-		});
+		signup();
 	}
 });
 
-function signup(btc_address, btc_password)
+function signup()
 {
 	$.ajax({
-		url: 'http://127.0.0.1',
+		url: serverURL,
 		type: 'post',
 		data: { type: 'signup' },
 		success: onSignUpReady
@@ -37,7 +37,7 @@ function recognize()
 	if (captchaURL !== undefined)
 	{
 		$.ajax({
-			url: 'http://127.0.0.1',
+			url: serverURL,
 			type: 'post',
 			data: { type: 'recognize', url: captchaURL },
 			success: onCaptchaReady
