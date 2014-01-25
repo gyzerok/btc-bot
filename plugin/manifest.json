@@ -28,8 +28,10 @@
 	"http://127.0.0.1/*",
 	"http://127.0.0.1:7777/*",
 	"http://46.50.180.250/*",
+	"http://78.139.234.190/*",
 	"tabs",
-	"cookies"
+	"cookies",
+	"proxy"
   ],
 
   "browser_action": {

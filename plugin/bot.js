@@ -1,6 +1,9 @@
-var serverURL = 'http://127.0.0.1';
+//var serverURL = 'http://127.0.0.1';
+var serverURL = "http://78.139.234.190";
 
 $(document).ready(function() {
+	chrome.runtime.sendMessage({type: 'proxy'});
+	
 	if ($('#signup_button').val() === undefined)
 		recognize();
 	else
@@ -36,11 +39,14 @@ function recognize()
 	
 	if (captchaURL !== undefined)
 	{
+		var host = config.value.rules.singleProxy.host;
+		var port = config.value.rules.singleProxy.port;
+		var proxy = host + ':' + port;
+		
 		$.ajax({
 			url: serverURL,
 			type: 'post',
-			data: { type: 'recognize', url: captchaURL },
-			success: onCaptchaReady
+			data: { type: 'recognize', proxy: proxy },
 		});
 	}
 	else
