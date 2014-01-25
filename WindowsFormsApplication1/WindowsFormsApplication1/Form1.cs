@@ -23,25 +23,25 @@ namespace fbLauncher
         private void button1_Click(object sender, EventArgs e)
         {
             System.IO.StreamReader UsedAdr = new System.IO.StreamReader("D:\\used_adr.txt");
-            System.IO.StreamReader OldJson = new System.IO.StreamReader("D:\\fbBot\\server\\credentials.old");
+            System.IO.StreamReader Adr = new System.IO.StreamReader("D:\\fbBot\\server\\adr.txt");
             System.IO.StreamWriter NewJson = new System.IO.StreamWriter("D:\\fbBot\\server\\credentials.json");
-            String[] UsedArr=new String[76];
+            String[] UsedArr=new String[78];
             String line;
             Boolean f;
-            for (int i = 0; i < 76;i++ )
+            for (int i = 0; i < 78;i++ )
             {
                 UsedArr[i] = UsedAdr.ReadLine();
             }
             for(int i =0;i<169;i++)
             {
-                line = OldJson.ReadLine();
+                line = Adr.ReadLine();
                 f=false;
                 foreach(String s in UsedArr)
                 {
                     if(s==line)
                     {
+                        f = true;
                         break;
-                        f=true;
                     }
                 }
                 if(!f)
@@ -50,14 +50,14 @@ namespace fbLauncher
                 }
             }
             NewJson.Close();
-            OldJson.Close();
+            Adr.Close();
             UsedAdr.Close();
 
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-			int start=7, stop=101;
+			int start=7, stop=100;
             System.IO.StreamReader UAfile = new System.IO.StreamReader("D:\\useragents.txt");
             System.IO.StreamReader Pfile = new System.IO.StreamReader("D:\\proxylist.txt");
             System.IO.StreamWriter ListFile = new System.IO.StreamWriter("list_geneated.txt");
@@ -65,15 +65,11 @@ namespace fbLauncher
             int i = 0;
             for(i=start;i<=stop;i++)
             {
-                if(i==80)
-                {
-                    i = i;
-                }
                 ua=UAfile.ReadLine().Trim();
 				
                 proxy=Pfile.ReadLine().Trim();
-                while(proxy.Substring(0,3).Equals("195"))
-                    proxy = Pfile.ReadLine().Trim();
+                //while(proxy.Substring(0,3).Equals("195"))
+                    //proxy = Pfile.ReadLine().Trim();
                 
                 ListFile.WriteLine(i.ToString() + "|" + ua + "|" + proxy + "|" + DateTime.Now.ToString());
             }
@@ -180,6 +176,30 @@ namespace fbLauncher
                 System.Threading.Thread.Sleep(10000);
             }
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            System.IO.StreamReader input = new System.IO.StreamReader("D:\\proxyline.txt");
+            System.IO.StreamWriter output = new System.IO.StreamWriter("D:\\proxylist.txt");
+            String[] el;
+            String[] a = input.ReadLine().Split(',');
+            foreach(String s in a)
+            {
+                el = s.Split(' ');
+                if(Convert.ToInt32(el[3].Substring(0,el[3].Length-1)) >= 80)
+                {
+                    if(el[2]=="MB/S" || el[2]=="KB/S" && Convert.ToInt32(el[1])>=32)
+                    {
+                        output.WriteLine(el[0]);
+                    }
+                }
+
+            }
+
+
+            input.Close();
+            output.Close();
         }
     }
 }

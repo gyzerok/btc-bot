@@ -41,6 +41,7 @@
             this.lbKills = new System.Windows.Forms.Label();
             this.bwKoriaviyKostil = new System.ComponentModel.BackgroundWorker();
             this.tbMaxCount = new System.Windows.Forms.TextBox();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -153,11 +154,22 @@
             this.tbMaxCount.TabIndex = 10;
             this.tbMaxCount.Text = "3";
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(598, 373);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 11;
+            this.button3.Text = "button3";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(819, 561);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.tbMaxCount);
             this.Controls.Add(this.lbKills);
             this.Controls.Add(this.lbStartedSummary);
@@ -194,6 +206,7 @@
         private System.Windows.Forms.Label lbKills;
         private System.ComponentModel.BackgroundWorker bwKoriaviyKostil;
         private System.Windows.Forms.TextBox tbMaxCount;
+        private System.Windows.Forms.Button button3;
     }
 }
 
