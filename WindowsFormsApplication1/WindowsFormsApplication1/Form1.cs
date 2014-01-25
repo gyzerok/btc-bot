@@ -22,51 +22,43 @@ namespace fbLauncher
 
         private void button1_Click(object sender, EventArgs e)
         {
-            System.IO.StreamReader UsedAdr = new System.IO.StreamReader("D:\\used_adr.txt");
-            System.IO.StreamReader Adr = new System.IO.StreamReader("D:\\fbBot\\server\\adr.txt");
+            System.IO.StreamReader usedAdr = new System.IO.StreamReader("D:\\used_adr.txt");
+            System.IO.StreamReader adr = new System.IO.StreamReader("D:\\fbBot\\server\\adr.txt");
             System.IO.StreamWriter NewJson = new System.IO.StreamWriter("D:\\fbBot\\server\\credentials.json");
-            String[] UsedArr=new String[78];
-            String line;
-            Boolean f;
-            for (int i = 0; i < 78;i++ )
+            List<string> UsedArr=new List<string>();
+            string line;
+
+            while((line=usedAdr.ReadLine())!=null)
             {
-                UsedArr[i] = UsedAdr.ReadLine();
+                UsedArr.Add(line);
             }
-            for(int i =0;i<169;i++)
+            while ((line = adr.ReadLine()) != null)
             {
-                line = Adr.ReadLine();
-                f=false;
-                foreach(String s in UsedArr)
-                {
-                    if(s==line)
-                    {
-                        f = true;
-                        break;
-                    }
-                }
-                if(!f)
+                if(!UsedArr.Contains(line))
                 {
                     NewJson.WriteLine("\"" + line + "\",");
                 }
             }
             NewJson.Close();
-            Adr.Close();
-            UsedAdr.Close();
-
+            adr.Close();
+            usedAdr.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-			int start=7, stop=100;
+			int start=1, stop=100;
             System.IO.StreamReader UAfile = new System.IO.StreamReader("D:\\useragents.txt");
             System.IO.StreamReader Pfile = new System.IO.StreamReader("D:\\proxylist.txt");
-            System.IO.StreamWriter ListFile = new System.IO.StreamWriter("list_geneated.txt");
+            System.IO.StreamWriter ListFile = new System.IO.StreamWriter("list.txt");
             String ua, proxy;
             int i = 0;
             for(i=start;i<=stop;i++)
             {
                 ua=UAfile.ReadLine().Trim();
-				
+                
+                for(int j=0;j<10;j++)
+                    UAfile.ReadLine();
+
                 proxy=Pfile.ReadLine().Trim();
                 //while(proxy.Substring(0,3).Equals("195"))
                     //proxy = Pfile.ReadLine().Trim();

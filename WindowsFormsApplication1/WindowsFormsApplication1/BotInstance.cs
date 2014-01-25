@@ -39,12 +39,25 @@ namespace fbLauncher
         }
         public Boolean Run()
         {
-            if(DateTime.Now-NextClick>new TimeSpan(0,0,1))
+            if (DateTime.Now - NextClick > new TimeSpan(0, 0, 1))
             {
                 Process p;
                 p = new Process();
                 p.StartInfo.FileName = ChromePath + ChromeInstance + "\\GoogleChromePortable.exe";
                 p.StartInfo.Arguments = "--load-extension=\"" + ExtensionPath + "\" --user-agent=\"" + UserAgent + "\" --proxy-server=\"" + ProxyString + "\" " + "\"http://freebitco.in/?r=233824\"";
+                p.Start();
+                return true;
+            }
+            return false;
+        }
+        public Boolean SimpleRun()
+        {
+            if (DateTime.Now - NextClick > new TimeSpan(0, 0, 1))
+            {
+                Process p;
+                p = new Process();
+                p.StartInfo.FileName = ChromePath + ChromeInstance + "\\GoogleChromePortable.exe";
+                p.StartInfo.Arguments = "--user-agent=\"" + UserAgent + "\" --proxy-server=\"" + ProxyString + "\" " + "\"http://freebitco.in/?r=233824\"";
                 p.Start();
                 return true;
             }
