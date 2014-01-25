@@ -23,7 +23,7 @@ app.post('/', function(req, res) {
 app.listen(80);
 console.log('Server running at http://127.0.0.1:80/');
 
-function recognize(url)
+function recognize(res, url)
 {
 	var ag = new Antigate('2e7f6789c66db87a70df90c0f821206d');
 	
