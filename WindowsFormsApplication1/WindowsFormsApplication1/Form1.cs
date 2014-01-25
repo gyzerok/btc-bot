@@ -22,33 +22,73 @@ namespace fbLauncher
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(Process.GetProcessesByName("GoogleChromePortable").Length.ToString());
+            System.IO.StreamReader UsedAdr = new System.IO.StreamReader("D:\\used_adr.txt");
+            System.IO.StreamReader OldJson = new System.IO.StreamReader("D:\\fbBot\\server\\credentials.old");
+            System.IO.StreamWriter NewJson = new System.IO.StreamWriter("D:\\fbBot\\server\\credentials.json");
+            String[] UsedArr=new String[76];
+            String line;
+            Boolean f;
+            for (int i = 0; i < 76;i++ )
+            {
+                UsedArr[i] = UsedAdr.ReadLine();
+            }
+            for(int i =0;i<169;i++)
+            {
+                line = OldJson.ReadLine();
+                f=false;
+                foreach(String s in UsedArr)
+                {
+                    if(s==line)
+                    {
+                        break;
+                        f=true;
+                    }
+                }
+                if(!f)
+                {
+                    NewJson.WriteLine("\"" + line + "\",");
+                }
+            }
+            NewJson.Close();
+            OldJson.Close();
+            UsedAdr.Close();
+
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+			int start=7, stop=101;
             System.IO.StreamReader UAfile = new System.IO.StreamReader("D:\\useragents.txt");
             System.IO.StreamReader Pfile = new System.IO.StreamReader("D:\\proxylist.txt");
-            System.IO.StreamWriter list = new System.IO.StreamWriter("list_geneated.txt");
+            System.IO.StreamWriter ListFile = new System.IO.StreamWriter("list_geneated.txt");
             String ua, proxy;
-            for(int i=7;i<=250;i++)
+            int i = 0;
+            for(i=start;i<=stop;i++)
             {
-                if(i==217)
+                if(i==80)
                 {
                     i = i;
                 }
                 ua=UAfile.ReadLine().Trim();
+				
                 proxy=Pfile.ReadLine().Trim();
-                list.WriteLine(i.ToString() + "|" + ua + "|" + proxy + "|" + DateTime.Now.ToString());
+                while(proxy.Substring(0,3).Equals("195"))
+                    proxy = Pfile.ReadLine().Trim();
+                
+                ListFile.WriteLine(i.ToString() + "|" + ua + "|" + proxy + "|" + DateTime.Now.ToString());
             }
-            MessageBox.Show("!");
+            UAfile.Close();
+            ListFile.Close();
+            Pfile.Close();
+
+            MessageBox.Show(i.ToString());
         }
         private void bwWorkLoop_DoWork(object sender, DoWorkEventArgs e)
         {
             var rnd = new Random();
             System.Diagnostics.Process[] plist;
             int RunningCount;
-            int maxcount = Convert.ToInt32(tbMaxCount.Text); //На деле будет на 1 процесс меньше, т.к. у хрома после закрытия всегда висит минимум 1 процесс
+            //int maxcount = Convert.ToInt32(tbMaxCount.Text); //На деле будет на 1 процесс меньше, т.к. у хрома после закрытия всегда висит минимум 1 процесс
             lbStartedSummary.Invoke(new MethodInvoker(() => lbStartedSummary.Text = "0"));
             lbRunningCount.Invoke(new MethodInvoker(() => lbRunningCount.Text = "0"));
             lbKills.Invoke(new MethodInvoker(() => lbKills.Text = "0"));
@@ -81,12 +121,12 @@ namespace fbLauncher
                         //lbRunningCount.Invoke(new MethodInvoker(() => lbRunningCount.Text = plist.Length.ToString()));
                         lbStartedSummary.Invoke(new MethodInvoker(() => lbStartedSummary.Text = (Convert.ToInt32(lbStartedSummary.Text) + 1).ToString()));
                         
-                        System.Threading.Thread.Sleep(20000);
+                        System.Threading.Thread.Sleep(10000);
                         
                     }
                 }
                 
-                System.Threading.Thread.Sleep(20000);
+                System.Threading.Thread.Sleep(10000);
             }
         }
 
