@@ -45,7 +45,6 @@ function signup(res)
 {
 	if (credentials.length > 0 && index < credentials.length)
 	{
-		console.log("SignUps: " + index);
 		res.writeHead(200, {'Content-Type': 'text/html'});
 		res.end(credentials[index]);
 		index++;
