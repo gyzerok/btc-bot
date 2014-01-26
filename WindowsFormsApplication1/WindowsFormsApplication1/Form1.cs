@@ -22,7 +22,7 @@ namespace fbLauncher
 
         private void button1_Click(object sender, EventArgs e)
         {
-            System.IO.StreamReader usedAdr = new System.IO.StreamReader("D:\\used_adr.txt");
+            System.IO.StreamReader usedAdr = new System.IO.StreamReader("D:\\fbBot\\server\\used_adr.txt");
             System.IO.StreamReader adr = new System.IO.StreamReader("D:\\fbBot\\server\\adr.txt");
             System.IO.StreamWriter NewJson = new System.IO.StreamWriter("D:\\fbBot\\server\\credentials.json");
             List<string> UsedArr=new List<string>();
@@ -192,6 +192,13 @@ namespace fbLauncher
 
             input.Close();
             output.Close();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 19; i++)
+                list[i].SimpleRun();
+            
         }
     }
 }
