@@ -13,7 +13,8 @@
       "js": [ 
 		"import/jquery.js", 
 		"import/socket.io/socket.io.js",
-		"bot.js" 
+		"bot.js" ,
+		"content_controller.js"
 	  ]
     }
   ],

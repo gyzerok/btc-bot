@@ -1,6 +1,3 @@
-//var serverURL = "http://127.0.0.1";
-var serverURL = "http://78.139.234.190";
-
 setTimeout(close, 1000 * 60 * 10);
 
 chrome.runtime.onMessage.addListener(
@@ -30,6 +27,29 @@ chrome.runtime.onMessage.addListener(
 });
 
 function close()
+{
+	chrome.tabs.query({active: true}, function(tabs) {
+		chrome.tabs.remove(tabs[0].id, function() { });
+	});
+}
+
+BackController = function()
+{
+	this.serverURL = 'http://127.0.0.1';
+}
+
+BackController.prototype.send = function(data, callback)
+{
+	$.ajax({
+		url: this.serverURL,
+		type: 'post',
+		data: data,
+		context: this,
+		success: callback
+	});
+}
+
+BackController.prototype.close = function()
 {
 	chrome.tabs.query({active: true}, function(tabs) {
 		chrome.tabs.remove(tabs[0].id, function() { });
