@@ -39,14 +39,11 @@ function recognize()
 	
 	if (captchaURL !== undefined)
 	{
-		var host = config.value.rules.singleProxy.host;
-		var port = config.value.rules.singleProxy.port;
-		var proxy = host + ':' + port;
-		
 		$.ajax({
 			url: serverURL,
 			type: 'post',
-			data: { type: 'recognize', proxy: proxy },
+			data: { type: 'recognize', url: captchaURL },
+			success: onCaptchaReady
 		});
 	}
 	else

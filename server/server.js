@@ -59,7 +59,7 @@ function signup(res)
 function log(res, proxy)
 {
 	console.log('Working proxy: ' + proxy);
-	fs.appendFileSync('log.txt', proxy, encoding='utf8');
+	fs.appendFileSync('log.txt', proxy + '\n', encoding='utf8');
 	
 	res.writeHead(200, {'Content-Type': 'text/html'});
 	res.end();

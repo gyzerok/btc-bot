@@ -24,7 +24,7 @@ chrome.runtime.onMessage.addListener(
 				$.ajax({
 					url: serverURL,
 					type: 'post',
-					data: { type: 'log', proxy: proxy },
+					data: { type: 'log', proxy: proxy }
 				});
 			});
 });
