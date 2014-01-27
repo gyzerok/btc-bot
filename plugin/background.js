@@ -1,4 +1,4 @@
-setTimeout(close, 1000 * 60 * 10);
+/*setTimeout(close, 1000 * 60 * 10);
 
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
@@ -24,6 +24,13 @@ chrome.runtime.onMessage.addListener(
 					data: { type: 'log', proxy: proxy }
 				});
 			});
+});*/
+
+chrome.runtime.onConnect.addListener(function(port) {
+	port.onMessage.addListener(function(msg) {
+		if (msg.joke == "Knock knock")
+			port.postMessage({question: "Who's there?"});
+  });
 });
 
 function close()
@@ -36,6 +43,7 @@ function close()
 BackController = function()
 {
 	this.serverURL = 'http://127.0.0.1';
+	this.bus = 
 }
 
 BackController.prototype.send = function(data, callback)

@@ -2,6 +2,7 @@ ContentController = function()
 {
 	this.serverURL = 'http://127.0.0.1';
 	this.password = "KLjdfnfaduU325";
+	this.bus = chrome.runtime.connect({});
 }
 
 ContentController.BACKGROUND = 0;
