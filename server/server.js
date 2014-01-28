@@ -56,8 +56,12 @@ function signup(res)
 
 function log(res, text)
 {
+	var date = new Date();
+	text = date.toLocaleDateString() + ' ' + date.toLocaleTimeString() + ' ' + text + '\n';
+	
 	console.log(text);
-	fs.appendFileSync('log.txt', text + '\n', encoding='utf8');
+	
+	fs.appendFileSync('log.txt', text, encoding='utf8');
 	
 	res.writeHead(200);
 	res.end();
