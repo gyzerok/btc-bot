@@ -35,9 +35,7 @@ function recognize(res, url)
 		if (error)
 			res.end('i love captcha');
 		else
-		{
 			res.end(text);
-		}
 	});
 }
 
