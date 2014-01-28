@@ -40,7 +40,7 @@ ContentController.prototype.recognize = function()
 	{
 		profit = $('#winnings').html();
 		
-		if (profit !== undefined)
+		if (profit !== undefined && profit.length > 0)
 			self.log(profit);
 		else
 			setTimeout(self.close, 30000);

@@ -24,7 +24,7 @@ BackController.prototype.getAddress = function(callback) {
 
 BackController.prototype.getProxy = function(callback) {
 	chrome.proxy.settings.get({}, function(config) {
-		var proxy = config.value.mode;//.rules.singleProxy.host;
+		var proxy = config.value.rules.singleProxy.host;
 		callback(proxy);
 	});
 }
