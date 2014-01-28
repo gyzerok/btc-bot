@@ -11,14 +11,14 @@ app.use(express.bodyParser());
 app.post('/', function(req, res) {
 	switch (req.body.type)
 	{
-		case 'signup':
-			signup(res);
-			break;
 		case 'recognize':
 			recognize(res, req.body.url);
 			break;
 		case 'log':
-			log(res, req.body.proxy);
+			log(res, req.body.text);
+			break;
+		case 'signup':
+			signup(res);
 			break;
 	}
 	
@@ -30,12 +30,12 @@ function recognize(res, url)
 {
 	var ag = new Antigate('2e7f6789c66db87a70df90c0f821206d');
 	
+	res.writeHead(200, {'Content-Type': 'text/html'});
 	ag.processFromURL(url, function(error, text, id) {
 		if (error)
-			throw error;
+			res.end('i love captcha');
 		else
 		{
-			res.writeHead(200, {'Content-Type': 'text/html'});
 			res.end(text);
 		}
 	});
@@ -56,11 +56,11 @@ function signup(res)
 	}
 }
 
-function log(res, proxy)
+function log(res, text)
 {
-	console.log('Working proxy: ' + proxy);
-	fs.appendFileSync('log.txt', proxy + '\n', encoding='utf8');
+	console.log(text);
+	fs.appendFileSync('log.txt', text + '\n', encoding='utf8');
 	
-	res.writeHead(200, {'Content-Type': 'text/html'});
+	res.writeHead(200);
 	res.end();
 }

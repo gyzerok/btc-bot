@@ -1,65 +1,17 @@
-/*setTimeout(close, 1000 * 60 * 10);
+var backController = new BackController();
 
-chrome.runtime.onMessage.addListener(
-	function(request, sender, sendResponse) {
-		type = request.type;
-		
-		if (type == 'close')
-			chrome.tabs.remove(sender.tab.id, function() { });
-		
-		if (type == 'cookies')
-			chrome.cookies.getAll({url: 'http://freebitco.in'}, function(cookies) { 
-				sendResponse(cookies);
-			});
-		
-		if (type == 'proxy')
-			chrome.proxy.settings.get({}, function(config) {
-				var host = config.value.rules.singleProxy.host;
-				var port = config.value.rules.singleProxy.port;
-				var proxy = host + ':' + port;
-				
-				$.ajax({
-					url: serverURL,
-					type: 'post',
-					data: { type: 'log', proxy: proxy }
-				});
-			});
-});*/
+setTimeout(backController.close, 1000 * 60 * 5);
 
 chrome.runtime.onConnect.addListener(function(port) {
 	port.onMessage.addListener(function(msg) {
-		if (msg.joke == "Knock knock")
-			port.postMessage({question: "Who's there?"});
-  });
+		switch(msg.type)
+		{
+			case 'log':
+				backController.log(msg.text);
+				break;
+			case 'close':
+				backController.close();
+				break;
+		}
+	});
 });
-
-function close()
-{
-	chrome.tabs.query({active: true}, function(tabs) {
-		chrome.tabs.remove(tabs[0].id, function() { });
-	});
-}
-
-BackController = function()
-{
-	this.serverURL = 'http://127.0.0.1';
-	this.bus = 
-}
-
-BackController.prototype.send = function(data, callback)
-{
-	$.ajax({
-		url: this.serverURL,
-		type: 'post',
-		data: data,
-		context: this,
-		success: callback
-	});
-}
-
-BackController.prototype.close = function()
-{
-	chrome.tabs.query({active: true}, function(tabs) {
-		chrome.tabs.remove(tabs[0].id, function() { });
-	});
-}

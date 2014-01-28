@@ -1,8 +1,8 @@
-ContentController = function()
+ContentController = function(bus)
 {
 	this.serverURL = 'http://127.0.0.1';
 	this.password = "KLjdfnfaduU325";
-	this.bus = chrome.runtime.connect({});
+	this.bus = bus;
 }
 
 ContentController.BACKGROUND = 0;
@@ -34,7 +34,14 @@ ContentController.prototype.recognize = function()
 		);
 	}
 	else
-		setTimeout(this.close, 5000);
+	{
+		profit = $('#winnings').html();
+		
+		if (profit !== undefined)
+			this.log(profit);
+		else
+			setTimeout(this.close, 5000);
+	}
 }
 
 ContentController.prototype.signup = function()
@@ -52,6 +59,10 @@ ContentController.prototype.signup = function()
 	);
 }
 
+ContentController.prototype.log = function(text) {
+	this.send(ContentController.BACKGROUND, {type: 'log', text: text});
+}
+
 ContentController.prototype.close = function()
 {
 	this.send(ContentController.BACKGROUND, {type: 'close'});
@@ -62,9 +73,9 @@ ContentController.prototype.send = function(dest, data, callback)
 	switch (dest)
 	{
 		case ContentController.BACKGROUND:
-			chrome.runtime.sendMessage(data, callback);
-			break
-		case ContentController.SERVER;
+			this.bus.postMessage(data);
+			break;
+		case ContentController.SERVER:
 			$.ajax({
 				url: this.serverURL,
 				type: 'post',
