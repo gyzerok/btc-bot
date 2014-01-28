@@ -1,8 +1,11 @@
+var self;
+
 ContentController = function(bus)
 {
-	this.serverURL = 'http://127.0.0.1';
-	this.password = "KLjdfnfaduU325";
-	this.bus = bus;
+	self = this;
+	self.serverURL = 'http://127.0.0.1';
+	self.password = "KLjdfnfaduU325";
+	self.bus = bus;
 }
 
 ContentController.BACKGROUND = 0;
@@ -14,7 +17,7 @@ ContentController.prototype.recognize = function()
 	
 	if (captchaURL !== undefined)
 	{
-		this.send(
+		self.send(
 			ContentController.SERVER,
 			{type: 'recognize', url: captchaURL},
 			function(text)
@@ -29,7 +32,7 @@ ContentController.prototype.recognize = function()
 					$('#free_play_form_button').click();
 				}
 				
-				setTimeout(this.recognize, 5000);
+				setTimeout(self.recognize, 5000);
 			}
 		);
 	}
@@ -38,34 +41,34 @@ ContentController.prototype.recognize = function()
 		profit = $('#winnings').html();
 		
 		if (profit !== undefined)
-			this.log(profit);
+			self.log(profit);
 		else
-			setTimeout(this.close, 5000);
+			setTimeout(self.close, 30000);
 	}
 }
 
 ContentController.prototype.signup = function()
 {
-	this.send(
+	self.send(
 		ContentController.SERVER,
 		{type: 'signup'},
 		function(btc_address)
 		{
 			$('#signup_form_btc_address').val(btc_address);
-			$('#signup_form_password').val(this.password);
-			$('#signup_form_repeat_password').val(this.password);
+			$('#signup_form_password').val(self.password);
+			$('#signup_form_repeat_password').val(self.password);
 			$('#signup_button').click();
 		}
 	);
 }
 
 ContentController.prototype.log = function(text) {
-	this.send(ContentController.BACKGROUND, {type: 'log', text: text});
+	self.send(ContentController.BACKGROUND, {type: 'log', text: text});
 }
 
 ContentController.prototype.close = function()
 {
-	this.send(ContentController.BACKGROUND, {type: 'close'});
+	self.send(ContentController.BACKGROUND, {type: 'close'});
 }
 
 ContentController.prototype.send = function(dest, data, callback)
@@ -73,14 +76,14 @@ ContentController.prototype.send = function(dest, data, callback)
 	switch (dest)
 	{
 		case ContentController.BACKGROUND:
-			this.bus.postMessage(data);
+			self.bus.postMessage(data);
 			break;
 		case ContentController.SERVER:
 			$.ajax({
-				url: this.serverURL,
+				url: self.serverURL,
 				type: 'post',
 				data: data,
-				context: this,
+				context: self,
 				success: callback
 			});
 			break;
