@@ -57,7 +57,9 @@ function signup(res)
 function log(res, text)
 {
 	var date = new Date();
-	text = date.toLocaleDateString() + ' ' + date.toLocaleTimeString() + ' ' + text + '\n';
+	var dateStr = date.getDay() + '.' + date.getMonth() + '.' + date.getFullYear();
+	var timeStr = date.toLocaleTimeString();
+	text = dateStr + ' ' + timeStr + '|' + text + '\n';
 	
 	console.log(text);
 	

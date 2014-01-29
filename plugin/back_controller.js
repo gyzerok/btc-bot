@@ -7,7 +7,7 @@ BackController = function() {
 
 BackController.prototype.log = function(text) {
 	self.getProxy(function (proxy) {		
-		var logText = proxy + " " + text;
+		var logText = proxy + '|' + text;
 		self.send({type: 'log', text: logText}, function() {});
 		/*self.getAddress(function (address, context) {
 			var logText = proxy + " " + address + " " + text;
