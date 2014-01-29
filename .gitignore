@@ -110,3 +110,5 @@ UpgradeLog*.XML
 // My custom ignores
 browser
 launcher.exe
+server/logs.txt
+server/credentials.json
