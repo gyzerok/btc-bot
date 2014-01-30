@@ -38,10 +38,12 @@ ContentController.prototype.recognize = function()
 	}
 	else
 	{
-		profit = $('#winnings').html();
+		var profit = $('#winnings').html();
+		var digits = $('#free_play_digits').html();
+		var text = digits + '|' + profit;
 		
 		if (profit !== undefined && profit.length > 0)
-			self.log(profit);			
+			self.log(text);			
 			
 		setTimeout(self.close, 30000);
 	}
